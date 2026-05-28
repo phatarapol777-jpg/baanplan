@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { ChevronDown, Search } from "lucide-react"
 
-const HERO_IMAGE_URL = "" // ← ใส่ URL รูปบ้านจาก Bunny.net ที่นี่
+const HERO_IMAGE_URL = "https://baanplan-cdn.b-cdn.net/LINE_ALBUM_clear%20Logo%20Bogie_260515_2.jpg" // ← ใส่ URL รูปบ้านจาก Bunny.net ที่นี่
 
 const styles = [
   { label: "ทุกสไตล์", value: "" },
