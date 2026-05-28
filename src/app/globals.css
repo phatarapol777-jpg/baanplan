@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Sarabun:wght@300;400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #ffffff;
+    color: #111111;
+    font-family: "Sarabun", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Prompt", sans-serif;
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn-dark {
+    @apply bg-ink text-white font-semibold px-7 py-3 rounded-full transition-all duration-200
+           hover:bg-ink/80 active:scale-95 whitespace-nowrap;
+  }
+  .btn-gold {
+    @apply bg-gold text-white font-semibold px-7 py-3 rounded-full transition-all duration-200
+           hover:bg-gold-dark active:scale-95;
+  }
+  .btn-outline {
+    @apply border border-white/40 text-white font-semibold px-7 py-3 rounded-full
+           transition-all duration-200 hover:bg-white/10 backdrop-blur-sm;
+  }
+  .btn-outline-dark {
+    @apply border border-ink/20 text-ink font-semibold px-7 py-3 rounded-full
+           transition-all duration-200 hover:border-ink hover:bg-ink hover:text-white;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden;
+  }
+  .card-cream {
+    @apply bg-cream rounded-2xl overflow-hidden;
+  }
+
+  /* Inputs */
+  .input-light {
+    @apply bg-white border border-gray-200 text-ink placeholder-gray-400 rounded-xl
+           px-4 py-3 w-full focus:outline-none focus:border-ink/40 transition-colors text-sm;
+  }
+  .select-light {
+    @apply bg-transparent text-ink w-full focus:outline-none cursor-pointer appearance-none text-sm font-medium;
+  }
+
+  /* Typography helpers */
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-[0.2em] text-gold;
+  }
+  .section-heading {
+    @apply font-display font-bold text-3xl md:text-4xl text-ink;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #e2c07a 0%, #c9a55a 50%, #8B6010 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .divider {
+    @apply h-px bg-gray-100 w-full;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #f9f8f5; }
+::-webkit-scrollbar-thumb { background: #d4c4a8; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #c9a55a; }

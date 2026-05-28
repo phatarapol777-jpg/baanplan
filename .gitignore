@@ -1,0 +1,24 @@
+# Dependencies — ไม่ต้อง commit ขึ้น Git
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Environment variables — ห้าม commit เด็ดขาด!
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+dev-output.log
+dev-error.log
+
+# Editor
+.vscode/
+.idea/
