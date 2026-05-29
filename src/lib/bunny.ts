@@ -21,7 +21,7 @@ export async function uploadToBunny(
   const uniqueName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
   const path = `${folder}/${uniqueName}`
 
-  const storageEndpoint = process.env.BUNNY_STORAGE_ENDPOINT ?? "storage.bunnycdn.com"
+  const storageEndpoint = "sg.storage.bunnycdn.com"
 
   const res = await fetch(
     `https://${storageEndpoint}/${zone}/${path}`,
@@ -52,7 +52,7 @@ export async function deleteFromBunny(fileUrl: string): Promise<void> {
 
   // แปลง CDN URL → Storage path
   const path = fileUrl.replace(`${cdnUrl}/`, "")
-  const storageEndpoint = process.env.BUNNY_STORAGE_ENDPOINT ?? "storage.bunnycdn.com"
+  const storageEndpoint = "sg.storage.bunnycdn.com"
 
   await fetch(`https://${storageEndpoint}/${zone}/${path}`, {
     method: "DELETE",
