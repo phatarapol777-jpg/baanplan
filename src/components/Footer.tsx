@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Home, Phone, Mail, MapPin, ChevronRight } from "lucide-react"
+import { Home, Phone, Mail, MapPin, ChevronRight, Lock } from "lucide-react"
 
 const footerLinks = {
   แบบบ้าน: [
@@ -74,7 +74,16 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-white/25 text-xs">
           <p>© 2025 BaanPlan. สงวนลิขสิทธิ์ทุกประการ</p>
-          <p>ออกแบบสำหรับคนไทย 🏠</p>
+          <div className="flex items-center gap-4">
+            <p>ออกแบบสำหรับคนไทย 🏠</p>
+            <Link
+              href="/admin"
+              className="flex items-center gap-1.5 text-white/15 hover:text-white/50 transition-colors duration-200"
+            >
+              <Lock size={10} />
+              <span>Admin</span>
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
