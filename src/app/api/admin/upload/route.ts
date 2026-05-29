@@ -11,9 +11,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "ไม่พบไฟล์" }, { status: 400 })
     }
 
-    // ขนาดไฟล์สูงสุด 10MB
-    if (file.size > 10 * 1024 * 1024) {
-      return NextResponse.json({ error: "ไฟล์ใหญ่เกิน 10MB" }, { status: 400 })
+    // ขนาดไฟล์สูงสุด 4MB (Vercel Hobby plan limit)
+    if (file.size > 4 * 1024 * 1024) {
+      return NextResponse.json({ error: "ไฟล์ใหญ่เกิน 4MB — กรุณาย่อรูปก่อนอัพโหลด" }, { status: 400 })
     }
 
     const rawBuffer = await file.arrayBuffer()
