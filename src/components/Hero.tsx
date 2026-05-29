@@ -81,7 +81,7 @@ export default function Hero({ heroImageUrl, heroFgImageUrl }: HeroProps) {
         </div>
 
         {/* Hero text */}
-        <div className="flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 pb-56">
+        <div className="flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 pb-80">
           <div className="opacity-0 animate-fade-up">
             <h1 className="font-display font-black text-hero text-white leading-none tracking-tight select-none">
               แบบบ้าน
