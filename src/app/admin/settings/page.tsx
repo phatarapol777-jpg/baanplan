@@ -32,6 +32,14 @@ export default function AdminSettingsPage() {
         body: JSON.stringify({ key: "hero_image_url", value: heroImageUrl }),
       })
       if (!res.ok) throw new Error("บันทึกไม่สำเร็จ")
+
+      // Revalidate หน้าแรกทันที — รูปขึ้นเร็วเลย ไม่ต้องรอ cache
+      await fetch("/api/admin/revalidate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: "/" }),
+      })
+
       setSaved(true)
       setTimeout(() => setSaved(false), 3000)
     } catch (e) {
