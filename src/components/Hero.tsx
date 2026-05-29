@@ -4,7 +4,8 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { ChevronDown, Search } from "lucide-react"
 
-const HERO_IMAGE_URL = "https://baanplan-cdn.b-cdn.net/LINE_ALBUM_clear%20Logo%20Bogie_260515_2.jpg" // ← ใส่ URL รูปบ้านจาก Bunny.net ที่นี่
+// Fallback รูป default (ถ้ายังไม่ได้ตั้งค่าใน Admin)
+const DEFAULT_HERO_IMAGE = "https://baanplan-cdn.b-cdn.net/LINE_ALBUM_clear%20Logo%20Bogie_260515_2.jpg"
 
 const styles = [
   { label: "ทุกสไตล์", value: "" },
@@ -30,11 +31,17 @@ const bedroomOptions = [
   { label: "4 ห้องนอน", value: "4" },
 ]
 
-export default function Hero() {
+interface HeroProps {
+  heroImageUrl?: string
+}
+
+export default function Hero({ heroImageUrl }: HeroProps) {
   const router = useRouter()
   const [style, setStyle] = useState("")
   const [floors, setFloors] = useState("")
   const [bedrooms, setBedrooms] = useState("")
+
+  const bgImage = heroImageUrl || DEFAULT_HERO_IMAGE
 
   const handleSearch = () => {
     const p = new URLSearchParams()
@@ -48,10 +55,10 @@ export default function Hero() {
     <section className="relative min-h-screen w-full overflow-hidden">
 
       {/* ─── Background ──────────────────────────────── */}
-      {HERO_IMAGE_URL ? (
+      {bgImage ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={HERO_IMAGE_URL}
+          src={bgImage}
           alt="House hero"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />

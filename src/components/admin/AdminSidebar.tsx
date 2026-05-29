@@ -2,13 +2,14 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Home, LayoutDashboard, BookImage, Tag, LogOut } from "lucide-react"
+import { Home, LayoutDashboard, BookImage, Tag, Settings, LogOut } from "lucide-react"
 import clsx from "clsx"
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: <LayoutDashboard size={18} />, exact: true },
   { href: "/admin/plans", label: "แบบบ้าน", icon: <BookImage size={18} /> },
   { href: "/admin/categories", label: "หมวดหมู่", icon: <Tag size={18} /> },
+  { href: "/admin/settings", label: "ตั้งค่าเว็บไซต์", icon: <Settings size={18} /> },
 ]
 
 export default function AdminSidebar() {
