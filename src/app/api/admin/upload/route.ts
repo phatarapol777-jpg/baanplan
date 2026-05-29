@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
 import { uploadToBunny } from "@/lib/bunny"
-import sharp from "sharp"
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,22 +17,27 @@ export async function POST(req: NextRequest) {
     }
 
     const rawBuffer = await file.arrayBuffer()
-
-    // แปลงเป็น WebP คุณภาพ 85% — ลดขนาดได้ ~60-70%
-    const webpBuffer = await sharp(Buffer.from(rawBuffer))
-      .webp({ quality: 85 })
-      .toBuffer()
-
-    // ใช้ชื่อไฟล์เดิมแต่เปลี่ยน extension เป็น .webp
     const baseName = file.name.replace(/\.[^.]+$/, "")
-    const webpFilename = `${baseName}.webp`
 
-    const url = await uploadToBunny(
-      webpBuffer.buffer as ArrayBuffer,
-      webpFilename,
-      "image/webp",
-      folder
-    )
+    let uploadBuffer: ArrayBuffer = rawBuffer
+    let uploadFilename = file.name
+    let uploadMime = file.type
+
+    // แปลงเป็น WebP ด้วย sharp (dynamic import — ไม่ crash ถ้า sharp ยังไม่ install)
+    try {
+      const sharp = (await import("sharp")).default
+      const webpBuffer = await sharp(Buffer.from(rawBuffer))
+        .webp({ quality: 85 })
+        .toBuffer()
+      uploadBuffer = webpBuffer.buffer as ArrayBuffer
+      uploadFilename = `${baseName}.webp`
+      uploadMime = "image/webp"
+    } catch {
+      // sharp ยังไม่พร้อม → upload ไฟล์ต้นฉบับแทน
+      console.warn("sharp not available, uploading original file")
+    }
+
+    const url = await uploadToBunny(uploadBuffer, uploadFilename, uploadMime, folder)
 
     return NextResponse.json({ url })
   } catch (err) {
