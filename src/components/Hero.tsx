@@ -33,9 +33,10 @@ const bedroomOptions = [
 
 interface HeroProps {
   heroImageUrl?: string
+  heroFgImageUrl?: string  // PNG ตัดพื้นหลัง วางหน้าตัวอักษร
 }
 
-export default function Hero({ heroImageUrl }: HeroProps) {
+export default function Hero({ heroImageUrl, heroFgImageUrl }: HeroProps) {
   const router = useRouter()
   const [style, setStyle] = useState("")
   const [floors, setFloors] = useState("")
@@ -54,35 +55,22 @@ export default function Hero({ heroImageUrl }: HeroProps) {
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
 
-      {/* ─── Background ──────────────────────────────── */}
+      {/* ─── Layer 1: Background image ───────────────── */}
       {bgImage ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={bgImage}
-          alt="House hero"
+          alt="House hero background"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
       ) : (
-        <div className="absolute inset-0 bg-house-gradient">
-          <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-            <svg viewBox="0 0 600 400" className="w-full max-w-2xl">
-              <polygon points="300,30 40,200 560,200" fill="white" />
-              <rect x="80" y="200" width="440" height="200" fill="white" />
-              <rect x="230" y="280" width="140" height="120" fill="#a8d5b5" />
-              <rect x="100" y="230" width="100" height="80" fill="#a8d5b5" stroke="white" strokeWidth="2" />
-              <rect x="400" y="230" width="100" height="80" fill="#a8d5b5" stroke="white" strokeWidth="2" />
-            </svg>
-          </div>
-          <div className="absolute top-10 left-20 w-48 h-20 bg-white/20 rounded-full blur-xl" />
-          <div className="absolute top-6 left-48 w-72 h-24 bg-white/15 rounded-full blur-xl" />
-          <div className="absolute top-14 right-24 w-56 h-20 bg-white/20 rounded-full blur-xl" />
-        </div>
+        <div className="absolute inset-0 bg-house-gradient" />
       )}
 
       {/* ─── Overlay ─────────────────────────────────── */}
       <div className="absolute inset-0 bg-hero-overlay" />
 
-      {/* ─── Content ─────────────────────────────────── */}
+      {/* ─── Layer 2: Content + Text (z-10) ──────────── */}
       <div className="relative z-10 min-h-screen flex flex-col">
 
         {/* Tagline top-right */}
@@ -159,6 +147,16 @@ export default function Hero({ heroImageUrl }: HeroProps) {
           </div>
         </div>
       </div>
+
+      {/* ─── Layer 3: Foreground PNG (z-20) ─── ซ้อนหน้าตัวอักษร */}
+      {heroFgImageUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={heroFgImageUrl}
+          alt="House foreground"
+          className="absolute inset-0 w-full h-full object-cover object-bottom pointer-events-none z-20"
+        />
+      )}
     </section>
   )
 }

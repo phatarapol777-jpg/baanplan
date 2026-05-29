@@ -6,6 +6,7 @@ import ImageUpload from "@/components/admin/ImageUpload"
 
 export default function AdminSettingsPage() {
   const [heroImageUrl, setHeroImageUrl] = useState("")
+  const [heroFgImageUrl, setHeroFgImageUrl] = useState("")
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -17,6 +18,7 @@ export default function AdminSettingsPage() {
       .then((r) => r.json())
       .then((data) => {
         setHeroImageUrl(data.hero_image_url ?? "")
+        setHeroFgImageUrl(data.hero_fg_image_url ?? "")
         setLoading(false)
       })
       .catch(() => setLoading(false))
@@ -26,11 +28,20 @@ export default function AdminSettingsPage() {
     setSaving(true)
     setError("")
     try {
-      const res = await fetch("/api/admin/settings", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: "hero_image_url", value: heroImageUrl }),
-      })
+      // บันทึกทั้ง 2 ค่าพร้อมกัน
+      const [res1, res2] = await Promise.all([
+        fetch("/api/admin/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: "hero_image_url", value: heroImageUrl }),
+        }),
+        fetch("/api/admin/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: "hero_fg_image_url", value: heroFgImageUrl }),
+        }),
+      ])
+      const res = res1.ok ? res2 : res1
       if (!res.ok) throw new Error("บันทึกไม่สำเร็จ")
 
       // Revalidate หน้าแรกทันที — รูปขึ้นเร็วเลย ไม่ต้องรอ cache
@@ -67,16 +78,35 @@ export default function AdminSettingsPage() {
       ) : (
         <div className="bg-white rounded-2xl shadow-card p-6 space-y-6">
 
-          {/* Hero Image Section */}
+          {/* Hero Background */}
           <div>
             <p className="font-semibold text-ink text-base mb-1">รูปพื้นหลังหน้าแรก (Hero)</p>
             <p className="text-xs text-ink/40 mb-5">
-              รูปที่แสดงเป็น background ของหน้าหลัก — แนะนำขนาด 1920×1080 ขึ้นไป
+              รูป background ของหน้าหลัก — แนะนำขนาด 1920×1080 ขึ้นไป
             </p>
             <ImageUpload
               value={heroImageUrl}
               onChange={setHeroImageUrl}
-              label="รูป Hero"
+              label="รูปพื้นหลัง"
+              folder="settings"
+            />
+          </div>
+
+          <div className="border-t border-gray-100 pt-6">
+            {/* Hero Foreground PNG */}
+            <p className="font-semibold text-ink text-base mb-1">รูปบ้านหน้า (Foreground PNG)</p>
+            <p className="text-xs text-ink/40 mb-2">
+              รูปนี้จะ<strong className="text-ink/60">ซ้อนทับตัวอักษร</strong> — ต้องเป็น PNG พื้นหลังโปร่งใส (transparent)
+            </p>
+            <div className="mb-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-700">
+              💡 ถ้าไม่มีรูป PNG ตัดพื้น สามารถใช้เว็บ{" "}
+              <a href="https://remove.bg" target="_blank" rel="noreferrer" className="underline font-semibold">remove.bg</a>
+              {" "}ตัดพื้นหลังบ้านออกฟรีได้เลย
+            </div>
+            <ImageUpload
+              value={heroFgImageUrl}
+              onChange={setHeroFgImageUrl}
+              label="รูปบ้าน Foreground (PNG)"
               folder="settings"
             />
           </div>

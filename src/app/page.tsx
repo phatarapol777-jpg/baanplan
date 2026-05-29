@@ -15,6 +15,7 @@ export default async function HomePage() {
   let categories = mockCategories
   let featuredPlans = mockPlans.filter((p) => p.is_featured)
   let heroImageUrl = ""
+  let heroFgImageUrl = ""
 
   if (!USE_MOCK_DATA) {
     try {
@@ -26,14 +27,16 @@ export default async function HomePage() {
       // fall through to mock data
     }
 
-    // ดึง hero image จาก site_settings
+    // ดึง hero settings จาก site_settings
     try {
       const { data } = await supabaseAdmin
         .from("site_settings")
-        .select("value")
-        .eq("key", "hero_image_url")
-        .single()
-      heroImageUrl = data?.value ?? ""
+        .select("key, value")
+        .in("key", ["hero_image_url", "hero_fg_image_url"])
+      data?.forEach((row) => {
+        if (row.key === "hero_image_url") heroImageUrl = row.value ?? ""
+        if (row.key === "hero_fg_image_url") heroFgImageUrl = row.value ?? ""
+      })
     } catch {
       // ใช้ default
     }
@@ -43,7 +46,7 @@ export default async function HomePage() {
     <>
       <Navbar transparent />
       <main>
-        <Hero heroImageUrl={heroImageUrl} />
+        <Hero heroImageUrl={heroImageUrl} heroFgImageUrl={heroFgImageUrl} />
         <FeaturedSection plans={featuredPlans} />
         <StatsSection />
         <CategorySection categories={categories} />
