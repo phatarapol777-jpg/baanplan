@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/plans", label: "แบบบ้านทั้งหมด" },
   { href: "/blog", label: "บทความ" },
   { href: "/about", label: "เกี่ยวกับเรา" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "ติดต่อ" },
 ]
 

@@ -11,7 +11,7 @@ const footerLinks = {
   ข้อมูล: [
     { label: "เกี่ยวกับเรา", href: "/about" },
     { label: "วิธีสั่งซื้อ", href: "/#how" },
-    { label: "คำถามที่พบบ่อย", href: "/faq" },
+    { label: "คำถามที่พบบ่อย (FAQ)", href: "/faq" },
     { label: "นโยบายความเป็นส่วนตัว", href: "/privacy" },
   ],
 }
