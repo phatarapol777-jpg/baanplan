@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
-import StatsSection from "@/components/StatsSection"
 import CategorySection from "@/components/CategorySection"
 import FeaturedSection from "@/components/FeaturedSection"
 import HowItWorks from "@/components/HowItWorks"
@@ -48,7 +47,6 @@ export default async function HomePage() {
       <main>
         <Hero heroImageUrl={heroImageUrl} heroFgImageUrl={heroFgImageUrl} />
         <FeaturedSection plans={featuredPlans} />
-        <StatsSection />
         <CategorySection categories={categories} />
         <HowItWorks />
       </main>
