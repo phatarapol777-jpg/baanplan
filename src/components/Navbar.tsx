@@ -7,11 +7,10 @@ import { Menu, X, Home } from "lucide-react"
 import clsx from "clsx"
 
 const navLinks = [
-  { href: "/plans", label: "แบบบ้าน" },
-  { href: "/plans?category=modern", label: "โมเดิร์น" },
-  { href: "/plans?category=tropical", label: "ทรอปิคอล" },
-  { href: "/categories", label: "หมวดหมู่" },
-  { href: "/about", label: "เกี่ยวกับ" },
+  { href: "/", label: "หน้าแรก" },
+  { href: "/plans", label: "แบบบ้านทั้งหมด" },
+  { href: "/blog", label: "บทความ" },
+  { href: "/about", label: "เกี่ยวกับเรา" },
   { href: "/contact", label: "ติดต่อ" },
 ]
 
