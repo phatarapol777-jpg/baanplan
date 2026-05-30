@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
 import CategorySection from "@/components/CategorySection"
 import FeaturedSection from "@/components/FeaturedSection"
+import StatsSection from "@/components/StatsSection"
 import HowItWorks from "@/components/HowItWorks"
 import Footer from "@/components/Footer"
 import { mockCategories, mockPlans, USE_MOCK_DATA } from "@/lib/mockData"
@@ -15,13 +16,21 @@ export default async function HomePage() {
   let featuredPlans = mockPlans.filter((p) => p.is_featured)
   let heroImageUrl = ""
   let heroFgImageUrl = ""
+  let planCount = mockPlans.length
+  let styleCount = mockCategories.length
 
   if (!USE_MOCK_DATA) {
     try {
-      [categories, featuredPlans] = await Promise.all([
+      const [cats, plans, { count: pc }, { count: sc }] = await Promise.all([
         getCategories(),
         getHousePlans({ featured: true, limit: 6 }),
+        supabaseAdmin.from("house_plans").select("*", { count: "exact", head: true }).eq("is_available", true),
+        supabaseAdmin.from("categories").select("*", { count: "exact", head: true }),
       ])
+      categories = cats
+      featuredPlans = plans
+      planCount = pc ?? planCount
+      styleCount = sc ?? styleCount
     } catch {
       // fall through to mock data
     }
@@ -47,6 +56,7 @@ export default async function HomePage() {
       <main>
         <Hero heroImageUrl={heroImageUrl} heroFgImageUrl={heroFgImageUrl} />
         <FeaturedSection plans={featuredPlans} />
+        <StatsSection planCount={planCount} styleCount={styleCount} />
         <CategorySection categories={categories} />
         <HowItWorks />
       </main>
