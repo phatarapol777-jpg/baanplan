@@ -63,21 +63,8 @@ export default function PlansFilter({ categories, currentFilters }: PlansFilterP
         >
           <option value="">ทั้งหมด</option>
           <option value="1">1 ชั้น</option>
+          <option value="1.5">ชั้นครึ่ง</option>
           <option value="2">2 ชั้น</option>
-          <option value="3">3 ชั้น</option>
-        </FilterSelect>
-
-        {/* Bedrooms */}
-        <FilterSelect
-          label="ห้องนอน"
-          value={filters.bedrooms ?? ""}
-          onChange={v => set("bedrooms", v)}
-        >
-          <option value="">ทั้งหมด</option>
-          <option value="2">2 ห้อง</option>
-          <option value="3">3 ห้อง</option>
-          <option value="4">4 ห้อง</option>
-          <option value="5">5+ ห้อง</option>
         </FilterSelect>
       </div>
     </div>

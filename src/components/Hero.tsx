@@ -20,15 +20,8 @@ const styles = [
 const floorOptions = [
   { label: "ทุกขนาด", value: "" },
   { label: "1 ชั้น", value: "1" },
+  { label: "ชั้นครึ่ง", value: "1.5" },
   { label: "2 ชั้น", value: "2" },
-  { label: "3 ชั้น", value: "3" },
-]
-
-const bedroomOptions = [
-  { label: "ทุกขนาด", value: "" },
-  { label: "2 ห้องนอน", value: "2" },
-  { label: "3 ห้องนอน", value: "3" },
-  { label: "4 ห้องนอน", value: "4" },
 ]
 
 interface HeroProps {
@@ -40,7 +33,6 @@ export default function Hero({ heroImageUrl, heroFgImageUrl }: HeroProps) {
   const router = useRouter()
   const [style, setStyle] = useState("")
   const [floors, setFloors] = useState("")
-  const [bedrooms, setBedrooms] = useState("")
 
   const bgImage = heroImageUrl || DEFAULT_HERO_IMAGE
 
@@ -48,7 +40,6 @@ export default function Hero({ heroImageUrl, heroFgImageUrl }: HeroProps) {
     const p = new URLSearchParams()
     if (style) p.set("category", style)
     if (floors) p.set("floors", floors)
-    if (bedrooms) p.set("bedrooms", bedrooms)
     router.push(`/plans?${p.toString()}`)
   }
 
@@ -118,19 +109,6 @@ export default function Hero({ heroImageUrl, heroFgImageUrl }: HeroProps) {
               <div className="relative flex items-center">
                 <select value={floors} onChange={e => setFloors(e.target.value)} className="select-light pr-5 w-full">
                   {floorOptions.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
-                </select>
-                <ChevronDown size={14} className="absolute right-0 text-gray-400 pointer-events-none" />
-              </div>
-            </div>
-
-            <div className="sm:hidden h-px bg-gray-100 mx-4" />
-
-            {/* Bedrooms */}
-            <div className="flex-1 px-4 sm:px-5 py-1">
-              <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-widest mb-0.5">ห้องนอน</p>
-              <div className="relative flex items-center">
-                <select value={bedrooms} onChange={e => setBedrooms(e.target.value)} className="select-light pr-5 w-full">
-                  {bedroomOptions.map(b => <option key={b.value} value={b.value}>{b.label}</option>)}
                 </select>
                 <ChevronDown size={14} className="absolute right-0 text-gray-400 pointer-events-none" />
               </div>
