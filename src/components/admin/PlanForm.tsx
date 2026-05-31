@@ -133,28 +133,6 @@ export default function PlanForm({ planId, initialData, initialImages = [] }: Pl
     router.refresh()
   }
 
-  // ─── Input helpers ────────────────────────────────────
-  const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
-    <div className="space-y-1.5">
-      <label className="text-xs font-semibold text-ink/50 uppercase tracking-widest block">{label}</label>
-      {children}
-    </div>
-  )
-  const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
-    <input {...props} className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-ink bg-white focus:outline-none focus:border-gold/50 transition-colors" />
-  )
-  const NumInput = ({ label, field }: { label: string; field: keyof PlanFormData }) => (
-    <Field label={label}>
-      <div className="flex items-center gap-2">
-        <button type="button" onClick={() => set(field, Math.max(0, (form[field] as number) - 1))}
-          className="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-ink hover:border-gold/50 transition-colors font-bold">−</button>
-        <span className="w-8 text-center font-bold text-ink">{form[field] as number}</span>
-        <button type="button" onClick={() => set(field, (form[field] as number) + 1)}
-          className="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-ink hover:border-gold/50 transition-colors font-bold">+</button>
-      </div>
-    </Field>
-  )
-
   return (
     <div className="space-y-6 pb-10">
       {error && (
@@ -203,12 +181,12 @@ export default function PlanForm({ planId, initialData, initialImages = [] }: Pl
           <div className="bg-white rounded-2xl p-6 shadow-card">
             <h2 className="font-display font-bold text-ink mb-5">ข้อมูลสเปค</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-              <NumInput label="จำนวนชั้น" field="floors" />
-              <NumInput label="ห้องนอน" field="bedrooms" />
-              <NumInput label="ห้องน้ำ" field="bathrooms" />
-              <NumInput label="ห้องครัว" field="kitchens" />
-              <NumInput label="ห้องนั่งเล่น" field="living_rooms" />
-              <NumInput label="โรงจอดรถ" field="garages" />
+              <NumInput label="จำนวนชั้น" value={form.floors} onDec={() => set("floors", Math.max(0, form.floors - 1))} onInc={() => set("floors", form.floors + 1)} />
+              <NumInput label="ห้องนอน" value={form.bedrooms} onDec={() => set("bedrooms", Math.max(0, form.bedrooms - 1))} onInc={() => set("bedrooms", form.bedrooms + 1)} />
+              <NumInput label="ห้องน้ำ" value={form.bathrooms} onDec={() => set("bathrooms", Math.max(0, form.bathrooms - 1))} onInc={() => set("bathrooms", form.bathrooms + 1)} />
+              <NumInput label="ห้องครัว" value={form.kitchens} onDec={() => set("kitchens", Math.max(0, form.kitchens - 1))} onInc={() => set("kitchens", form.kitchens + 1)} />
+              <NumInput label="ห้องนั่งเล่น" value={form.living_rooms} onDec={() => set("living_rooms", Math.max(0, form.living_rooms - 1))} onInc={() => set("living_rooms", form.living_rooms + 1)} />
+              <NumInput label="โรงจอดรถ" value={form.garages} onDec={() => set("garages", Math.max(0, form.garages - 1))} onInc={() => set("garages", form.garages + 1)} />
             </div>
             <div className="mt-5">
               <Field label="พื้นที่ใช้สอย (ตร.ม.)">
@@ -298,6 +276,34 @@ export default function PlanForm({ planId, initialData, initialImages = [] }: Pl
         </div>
       </div>
     </div>
+  )
+}
+
+// ── Input helpers (ต้องอยู่นอก PlanForm เพื่อไม่ให้ re-mount ทุก render) ──
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="space-y-1.5">
+      <label className="text-xs font-semibold text-ink/50 uppercase tracking-widest block">{label}</label>
+      {children}
+    </div>
+  )
+}
+
+function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
+  return (
+    <input {...props} className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-ink bg-white focus:outline-none focus:border-gold/50 transition-colors" />
+  )
+}
+
+function NumInput({ label, value, onDec, onInc }: { label: string; value: number; onDec: () => void; onInc: () => void }) {
+  return (
+    <Field label={label}>
+      <div className="flex items-center gap-2">
+        <button type="button" onClick={onDec} className="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-ink hover:border-gold/50 transition-colors font-bold">−</button>
+        <span className="w-8 text-center font-bold text-ink">{value}</span>
+        <button type="button" onClick={onInc} className="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-ink hover:border-gold/50 transition-colors font-bold">+</button>
+      </div>
+    </Field>
   )
 }
 
