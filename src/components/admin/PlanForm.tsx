@@ -189,7 +189,9 @@ export default function PlanForm({ planId, initialData, initialImages = [] }: Pl
                 >
                   <option value={1}>1 ชั้น</option>
                   <option value={1.5}>ชั้นครึ่ง</option>
-                  <option value={2}>2 ชั้น ขึ้นไป</option>
+                  <option value={2}>2 ชั้น</option>
+                  <option value={3}>3 ชั้น</option>
+                  <option value={4}>4 ชั้น</option>
                 </select>
               </Field>
               <NumInput label="ห้องนอน" value={form.bedrooms} onDec={() => set("bedrooms", Math.max(0, form.bedrooms - 1))} onInc={() => set("bedrooms", form.bedrooms + 1)} />

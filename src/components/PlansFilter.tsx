@@ -65,6 +65,8 @@ export default function PlansFilter({ categories, currentFilters }: PlansFilterP
           <option value="1">1 ชั้น</option>
           <option value="1.5">ชั้นครึ่ง</option>
           <option value="2">2 ชั้น</option>
+          <option value="3">3 ชั้น</option>
+          <option value="4">4 ชั้น</option>
         </FilterSelect>
       </div>
     </div>
