@@ -181,7 +181,17 @@ export default function PlanForm({ planId, initialData, initialImages = [] }: Pl
           <div className="bg-white rounded-2xl p-6 shadow-card">
             <h2 className="font-display font-bold text-ink mb-5">ข้อมูลสเปค</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-              <NumInput label="จำนวนชั้น" value={form.floors} onDec={() => set("floors", Math.max(0, form.floors - 1))} onInc={() => set("floors", form.floors + 1)} />
+              <Field label="จำนวนชั้น">
+                <select
+                  value={form.floors}
+                  onChange={e => set("floors", parseFloat(e.target.value))}
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-ink bg-white focus:outline-none focus:border-gold/50 transition-colors appearance-none cursor-pointer"
+                >
+                  <option value={1}>1 ชั้น</option>
+                  <option value={1.5}>ชั้นครึ่ง</option>
+                  <option value={2}>2 ชั้น ขึ้นไป</option>
+                </select>
+              </Field>
               <NumInput label="ห้องนอน" value={form.bedrooms} onDec={() => set("bedrooms", Math.max(0, form.bedrooms - 1))} onInc={() => set("bedrooms", form.bedrooms + 1)} />
               <NumInput label="ห้องน้ำ" value={form.bathrooms} onDec={() => set("bathrooms", Math.max(0, form.bathrooms - 1))} onInc={() => set("bathrooms", form.bathrooms + 1)} />
               <NumInput label="ห้องครัว" value={form.kitchens} onDec={() => set("kitchens", Math.max(0, form.kitchens - 1))} onInc={() => set("kitchens", form.kitchens + 1)} />
